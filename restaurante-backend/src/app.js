@@ -12,9 +12,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configuración de CORS
-app.use(
-  cors({ origin: ["http://localhost:5173", "http://localhost:4173"] })
-);
+const origenes = process.env.FRONTEND_URL
+  ? process.env.FRONTEND_URL.split(",").map((o) => o.trim())
+  : ["http://localhost:5173", "http://localhost:4173"];
+
+app.use(cors({ origin: origenes }));
 app.use(express.json());
 
 // Ruta de salud: sirve para comprobar que el servicio está vivo
