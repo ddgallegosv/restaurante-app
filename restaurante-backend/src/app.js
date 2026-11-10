@@ -2,22 +2,24 @@ import express from "express";
 import dotenv from "dotenv";
 import platosRoutes from "./routes/platos.routes.js";
 import categoriasRoutes from "./routes/categorias.routes.js";
-import cors from "cors"; //Importamos cors para el API:CORS
+import cors from "cors";
 
 dotenv.config();
+
+const PRODUCCION = process.env.NODE_ENV === "production";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-//Añadimos las URL que usará la aplicación
+// Configuración de CORS
 app.use(
   cors({ origin: ["http://localhost:5173", "http://localhost:4173"] })
 );
 app.use(express.json());
 
-// Ruta raíz de comprobación
+// Ruta de salud: sirve para comprobar que el servicio está vivo
 app.get("/", (req, res) => {
-  res.json({ mensaje: "API Restaurante operativa" });
+  res.json({ estado: "ok", servicio: "api-restaurante" });
 });
 
 // Rutas de los modelos
@@ -29,10 +31,12 @@ app.use((req, res) => {
   res.status(404).json({ error: "Ruta no encontrada" });
 });
 
-// Manejo centralizado de errores 500
+// Manejador de errores global: el detalle va a los LOGS, no al usuario
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).json({ error: "Error interno del servidor" });
+  res.status(500).json({
+    error: PRODUCCION ? "Error interno del servidor" : err.message,
+  });
 });
 
 app.listen(PORT, () => {
