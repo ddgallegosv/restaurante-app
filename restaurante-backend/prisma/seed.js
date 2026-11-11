@@ -1,7 +1,4 @@
-import pkg from "@prisma/client";
-const { PrismaClient } = pkg;
-
-const prisma = new PrismaClient();
+import prisma from "../src/lib/prisma.js";
 
 async function main() {
   // 1. Crear categoría inicial
