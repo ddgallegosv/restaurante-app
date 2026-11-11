@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import pkg from "@prisma/client";
+const { PrismaClient } = pkg;
 
 const prisma = new PrismaClient();
 
@@ -21,6 +22,7 @@ async function main() {
       id: 1,
       nombre: "Ensalada Mediterránea",
       precio: 8.5,
+      calorias: 250,
       disponible: true,
       categoriaId: categoria.id,
     },
