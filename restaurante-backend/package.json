@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "node --watch src/app.js",
-    "start:prod": "prisma migrate deploy && node prisma/seed.js && node src/app.js"
-  },
+  "start": "node src/app.js",
+  "dev": "node --watch src/app.js",
+  "start:prod": "npx prisma generate && prisma migrate deploy && node prisma/seed.js && node src/app.js"
+},
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.10.0",
     "@prisma/client": "^7.10.0",
